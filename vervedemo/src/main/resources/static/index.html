@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Verve Daily - News that matters</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/notification.css">
+    <link rel="stylesheet" href="css/weather-widget.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" id="app">
+        <!-- Authentication Section (initially visible) -->
+        <section id="auth-section" class="section active">
+            <div class="newspaper-header">
+                <h1 class="newspaper-title">THE VERVE DAILY</h1>
+                <p class="newspaper-date" id="current-date"></p>
+            </div>
+            
+            <div class="auth-container">
+                <div id="auth-message-container"></div>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+                
+                <div class="tab-content" id="login-tab">
+                    <h2>Welcome Back</h2>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-username">Username</label>
+                            <div class="input-container">
+                                <input type="text" id="login-username" placeholder="Enter your username" required>
+                                <i class="fas fa-user auth-form-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <div class="input-container">
+                                <input type="password" id="login-password" placeholder="Enter your password" required>
+                                <i class="fas fa-eye auth-form-icon toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember-me" checked>
+                                <label for="remember-me">Remember me</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                    
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="account-switch">
+                        <p>Don't have an account? <a href="#" id="go-to-register">Create one</a></p>
+                    </div>
+                </div>
+                
+                <div class="tab-content hidden" id="register-tab">
+                    <h2>Create Account</h2>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-username">Username</label>
+                            <div class="input-container">
+                                <input type="text" id="register-username" placeholder="Choose a username (3-20 characters)" required>
+                                <i class="fas fa-user auth-form-icon"></i>
+                            </div>
+                            <small class="form-help-text">Use 3-20 characters, letters, numbers, underscores, and hyphens only</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <div class="input-container">
+                                <input type="email" id="register-email" placeholder="Enter your email address" required>
+                                <i class="fas fa-envelope auth-form-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <div class="input-container">
+                                <input type="password" id="register-password" placeholder="Create a password (min 6 characters)" required>
+                                <i class="fas fa-eye auth-form-icon toggle-password"></i>
+                            </div>
+                            <div class="password-strength"></div>
+                            <small class="password-strength-text"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirm Password</label>
+                            <div class="input-container">
+                                <input type="password" id="register-confirm-password" placeholder="Confirm your password" required>
+                                <i class="fas fa-eye auth-form-icon toggle-password"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h3>Select Your Interests</h3>
+                            <small class="form-help-text">Choose at least one interest to personalize your feed</small>
+                            <div class="interests-container" id="interests-container">
+                                <!-- Interests will be loaded here dynamically -->
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </form>
+                    
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <div class="account-switch">
+                        <p>Already have an account? <a href="#" id="go-to-login">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Home Section (initially hidden) -->
+        <section id="home-section" class="section hidden">
+            <div class="newspaper-header">
+                <h1 class="newspaper-title">THE VERVE DAILY</h1>
+                <p class="newspaper-date" id="home-current-date"></p>
+                <div class="navbar">
+                    <nav>
+                        <ul>
+                            <div class="nav-main-items">
+                                <li><a href="#" id="nav-home" class="active"><i class="fas fa-newspaper"></i> Newspaper</a></li>
+                                <li><a href="#" id="nav-surprise"><i class="fas fa-magic"></i> Surprise Me</a></li>
+                                <li><a href="#" id="nav-weather"><i class="fas fa-cloud-sun"></i> Weather</a></li>
+                                <li><a href="#" id="nav-profile"><i class="fas fa-user"></i> Profile</a></li>
+                            </div>
+                            <div class="nav-right-items">
+                                <!-- Notification icon will be inserted here by JS -->
+                                <li><a href="#" id="nav-logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </div>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="home-content">
+                <div id="weather-widget-container"></div>
+                <h2>Today's Headlines</h2>
+                <div class="article-grid" id="feed-container">
+                    <!-- Articles will be loaded here dynamically -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Profile Section (initially hidden) -->
+        <section id="profile-section" class="section hidden">
+            <div class="newspaper-header">
+                <h1 class="newspaper-title">THE VERVE DAILY</h1>
+                <p class="newspaper-date" id="profile-current-date"></p>
+                <div class="navbar">
+                    <nav>
+                        <ul>
+                            <div class="nav-main-items">
+                                <li><a href="#" id="profile-nav-home"><i class="fas fa-newspaper"></i> Newspaper</a></li>
+                                <li><a href="#" id="profile-nav-surprise"><i class="fas fa-magic"></i> Surprise Me</a></li>
+                                <li><a href="#" id="profile-nav-weather"><i class="fas fa-cloud-sun"></i> Weather</a></li>
+                                <li><a href="#" id="profile-nav-profile" class="active"><i class="fas fa-user"></i> Profile</a></li>
+                            </div>
+                            <div class="nav-right-items">
+                                <!-- Notification icon will be inserted here by JS -->
+                                <li><a href="#" id="profile-nav-logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </div>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-header">
+                    <h2 id="profile-username">Username's Profile</h2>
+                    <button class="btn btn-secondary" id="edit-interests-btn">Edit Interests</button>
+                </div>
+                
+                <div class="profile-interests hidden" id="profile-interests-section">
+                    <h3>Your Interests</h3>
+                    <div class="interests-container" id="profile-interests-container">
+                        <!-- User interests will be loaded here dynamically -->
+                    </div>
+                    <button class="btn btn-primary" id="save-interests-btn">Save Interests</button>
+                </div>
+                
+                <div class="profile-posts">
+                    <h3>Your Articles</h3>
+                    <button class="btn btn-primary" id="create-post-btn">Create New Article</button>
+                    <div class="article-grid" id="profile-posts-container">
+                        <!-- User's posts will be loaded here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Surprise Me Section (initially hidden) -->
+        <section id="surprise-section" class="section hidden">
+            <div class="newspaper-header">
+                <h1 class="newspaper-title">THE VERVE DAILY</h1>
+                <p class="newspaper-date" id="surprise-current-date"></p>
+                <div class="navbar">
+                    <nav>
+                        <ul>
+                            <div class="nav-main-items">
+                                <li><a href="#" id="surprise-nav-home"><i class="fas fa-newspaper"></i> Newspaper</a></li>
+                                <li><a href="#" id="surprise-nav-surprise" class="active"><i class="fas fa-magic"></i> Surprise Me</a></li>
+                                <li><a href="#" id="surprise-nav-weather"><i class="fas fa-cloud-sun"></i> Weather</a></li>
+                                <li><a href="#" id="surprise-nav-profile"><i class="fas fa-user"></i> Profile</a></li>
+                            </div>
+                            <div class="nav-right-items">
+                                <!-- Notification icon will be inserted here by JS -->
+                                <li><a href="#" id="surprise-nav-logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </div>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="surprise-content">
+                <div class="surprise-header">
+                    <h2>Discover Something New</h2>
+                    <p class="section-description">Step outside your comfort zone and explore fresh perspectives.</p>
+                    
+                    <div class="surprise-controls">
+                        <button class="btn btn-primary" id="refresh-surprise-btn">
+                            <i class="fas fa-sync-alt"></i> Refresh Articles
+                        </button>
+                        
+                        <div class="surprise-filter">
+                            <select id="surprise-category-filter">
+                                <option value="all">All Categories</option>
+                                <!-- Categories will be loaded dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="surprise-layout">
+                    <div class="surprise-featured">
+                        <h3>Featured Surprise</h3>
+                        <div id="featured-surprise-container">
+                            <!-- Featured article will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="surprise-grid">
+                        <h3>More Discoveries</h3>
+                        <div class="article-grid" id="surprise-container">
+                            <!-- Surprise articles will be loaded here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Create Post Modal -->
+        <div class="modal hidden" id="create-post-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="post-modal-title">Create New Article</h2>
+                <form id="create-post-form">
+                    <div class="form-group">
+                        <label for="post-title">Title</label>
+                        <input type="text" id="post-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-content">Content</label>
+                        <textarea id="post-content" rows="10" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <h3>Select Categories</h3>
+                        <div class="interests-container" id="post-interests-container">
+                            <!-- Interests will be loaded here dynamically -->
+                        </div>
+                    </div>
+                    <input type="hidden" id="post-edit-id" value="">
+                    <button type="submit" class="btn btn-primary" id="post-submit-btn">Publish</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Article Modal -->
+        <div class="modal hidden" id="article-modal">
+            <div class="modal-content">
+                <span class="close-modal" id="article-modal-close">&times;</span>
+                <h2 id="article-modal-title"></h2>
+                <p class="article-metadata" id="article-modal-metadata"></p>
+                <div id="article-modal-content"></div>
+                
+                <div class="article-actions hidden" id="article-actions">
+                    <button class="btn btn-secondary" id="edit-article-btn">Edit</button>
+                    <button class="btn btn-danger" id="delete-article-btn">Delete</button>
+                </div>
+                
+                <div class="article-comments">
+                    <h3>Comments</h3>
+                    <div id="comments-container">
+                        <!-- Comments will be loaded here dynamically -->
+                    </div>
+                    <form id="comment-form">
+                        <div class="form-group">
+                            <label for="comment-content">Add a comment</label>
+                            <textarea id="comment-content" rows="3" required></textarea>
+                        </div>
+                        <input type="hidden" id="comment-edit-id" value="">
+                        <button type="submit" class="btn btn-secondary" id="comment-submit-btn">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Edit Comment Modal -->
+        <div class="modal hidden" id="edit-comment-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Edit Comment</h2>
+                <form id="edit-comment-form">
+                    <div class="form-group">
+                        <label for="edit-comment-content">Comment</label>
+                        <textarea id="edit-comment-content" rows="3" required></textarea>
+                    </div>
+                    <input type="hidden" id="edit-comment-id" value="">
+                    <button type="submit" class="btn btn-primary">Update Comment</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Confirmation Modal -->
+        <div class="modal hidden" id="confirm-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Confirm Action</h2>
+                <p id="confirm-message">Are you sure you want to delete this?</p>
+                <div class="modal-buttons">
+                    <button class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+                    <button class="btn btn-danger" id="confirm-ok">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/notification.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
