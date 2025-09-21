@@ -32,29 +32,8 @@ In today's digital world, information overload is a real challenge. VERVE aims t
 - **Database**: PostgreSQL
 - **Additional Tools**: Git, NewsAPI, Reddit APIs
 
-## Weekly Progress Reports
-
-### Week 1: Project Proposal
-[View Week 1 Documentation](https://github.com/user-attachments/files/19657895/Verve-NewsAggregator.-.Week1.pdf)
-
-
-### Week 2: Requirements Specification
-[View Week 2 Documentation](https://github.com/user-attachments/files/19657897/Verve-NewsAggregator.-.Week2.pdf)
-
-
-### Week 3: System Architecture Design
-[View Week 3 Documentation](https://github.com/user-attachments/files/19657901/Verve-NewsAggregator.-.Week3.pdf)
-
-
-### Week 4: Class Diagram and Initial Implementation
-[View Week 4 Documentation](https://github.com/user-attachments/files/19657903/Verve-NewsAggregator.-.Week4.pdf)
-
-
-### Week 5: [Coming Soon]
-[View Week 5 Documentation]
-
-### Week 6: [Coming Soon]
-[View Week 6 Documentation]
+## Final Documentation
+[Documentation](https://github.com/user-attachments/files/22454916/Verve-NewsAggregator.pdf)
 
 ## Getting Started
 
